@@ -1,6 +1,6 @@
 .PHONY: build
 build: ## Build a version
-	go build -v ./...
+	go build -v ./cmd/apiserver
 
 .PHONY: help
 help:
