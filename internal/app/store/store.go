@@ -31,7 +31,7 @@ func (s *Store) Open() error {
 	return nil
 }
 
-// Close
+// Close ...
 func (s *Store) Close() {
-	// ...
+	s.db.Close()
 }
