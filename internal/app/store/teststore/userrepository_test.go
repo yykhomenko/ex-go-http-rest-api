@@ -6,6 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/yykhomenko/http-rest-api/internal/app/model"
+	"github.com/yykhomenko/http-rest-api/internal/app/store"
 	"github.com/yykhomenko/http-rest-api/internal/app/store/teststore"
 )
 
@@ -20,7 +21,7 @@ func TestUserRepository_FindByEmail(t *testing.T) {
 	s := teststore.New()
 	email := "user@example.org"
 	_, err := s.User().FindByEmail(email)
-	assert.Error(t, err)
+	assert.EqualError(t, err, store.ErrRecordNotFound.Error())
 
 	u := model.TestUser(t)
 	u.Email = email
