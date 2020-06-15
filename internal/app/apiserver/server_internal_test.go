@@ -72,6 +72,27 @@ func TestServer_HandleSessionsCreate(t *testing.T) {
 			},
 			expectedCode: http.StatusOK,
 		},
+		{
+			name:         "invalid payload",
+			payload:      "invalid",
+			expectedCode: http.StatusBadRequest,
+		},
+		{
+			name: "invalid email",
+			payload: map[string]string{
+				"email":    "invalid",
+				"password": u.Password,
+			},
+			expectedCode: http.StatusUnauthorized,
+		},
+		{
+			name: "invalid password",
+			payload: map[string]string{
+				"email":    u.Email,
+				"password": "invalid",
+			},
+			expectedCode: http.StatusUnauthorized,
+		},
 	}
 
 	for _, tc := range testCases {
