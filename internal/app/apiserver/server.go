@@ -36,6 +36,11 @@ func (s *server) configureRouter() {
 }
 
 func (s *server) handleUsersCreate() http.HandlerFunc {
+	type request struct {
+		Email    string `json:"email"`
+		Password string `json:"password"`
+	}
+
 	return func(w http.ResponseWriter, r *http.Request) {
 
 	}
