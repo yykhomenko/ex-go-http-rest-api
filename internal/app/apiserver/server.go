@@ -7,6 +7,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/sirupsen/logrus"
 
+	"github.com/yykhomenko/http-rest-api/internal/app/model"
 	"github.com/yykhomenko/http-rest-api/internal/app/store"
 )
 
@@ -48,6 +49,19 @@ func (s *server) handleUsersCreate() http.HandlerFunc {
 			s.error(w, r, http.StatusBadRequest, err)
 			return
 		}
+
+		u := &model.User{
+			Email:    req.Email,
+			Password: req.Password,
+		}
+
+		if err := s.store.User().Create(u); err != nil {
+			s.error(w, r, http.StatusUnprocessableEntity, err)
+			return
+		}
+
+		u.Sanitize()
+		s.respond(w, r, http.StatusCreated, u)
 	}
 }
 
